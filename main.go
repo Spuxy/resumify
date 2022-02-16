@@ -98,7 +98,7 @@ func main() {
 			panic(err)
 		}
 
-		f, err := os.Create("generated.html")
+		f, err := os.Create("index.html")
 		if err != nil {
 			panic(err)
 		}
