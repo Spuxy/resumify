@@ -1,0 +1,166 @@
+name:
+  first: Filip
+  last: Boye-Kofi
+email: Spuxy@seznam.cz
+pdf: /data/cv.pdf
+src: https://github.com/Spuxy/cv
+url: "spuxy.github.io"
+social:
+  github: SpuxyGithub
+  twitter: SpuxyTwitter
+  linkedin: SpuxyLinkedin
+
+# Erdős  number is at most 4.
+# (Brandon Amos -> Layne Watson -> Leroy Kelly -> Zoltán Füredi -> Paul Erdős )
+
+# LaTeX formatting
+theme: 
+  style: banking # casual, classic, oldstyle, or banking
+  color: gruvbox
+# TODO: neeed to impelement in go
+order:
+  - [about, NONE]
+  - [current_position, Current Position]
+  - [education, Education]
+  - [positions, Previous Positions]
+  - [honors, Honors \& Awards]
+  - [all_publications, Publications]
+  - [NEWPAGE, NEWPAGE]
+  - [repos, Repositories]
+  - [talks, Invited Talks]
+  - [advising, Interns and Students]
+  - [service, Professional Activities]
+  - [teaching, Teaching]
+  - [skills, Skills]
+
+about: '
+  I am a research scientist at <b>Facebook AI (FAIR)</b> in NYC and
+  study foundational topics in <b>machine learning</b> and <b>optimization</b>,
+  recently involving reinforcement learning, control,
+  optimal transport, and geometry.
+  My research is on learning systems that understand and interact with our world
+  and focuses on integrating structural information and domain knowledge into
+  these systems to represent non-trivial reasoning operations.
+  A key theme of my work in this space involves the use of optimization as
+  a differentiable building block in larger architectures that are end-to-end learned.
+  I believe that science should be open and reproducible and
+  freely publish my research code to \href{https://github.com/bamos}{GitHub}.
+<br><br>'
+
+service:
+  - details: NeurIPS Learning Meets Combinatorial Optimization Workshop Organizer
+    year: 2020
+    url: https://sites.google.com/view/lmca2020/home
+  - details: CVPR Deep Declarative Workshop Organizer
+    url: https://anucvml.github.io/ddn-cvprw2020/
+    year: 2020
+  - details: ECCV Deep Declarative Tutorial Organizer
+    url: https://anucvml.github.io/ddn-eccvt2020/
+    year: 2020
+
+repos:
+  - repo_url: https://github.com/facebookresearch/theseus
+    name: facebookresearch/theseus
+    year: 2022
+    desc: Differentiable non-linear optimization library
+  - repo_url: https://github.com/facebookresearch/mbrl-lib
+    name: facebookresearch/theseus
+    year: 2021
+    desc: Model-based reinforcement learning library
+
+education:
+  - school: Carnegie Mellon University
+    location: Pittsburgh, PA
+    degree: Ph.D. in Computer Science
+    dates: 2014 - 2019
+
+  - school: Virginia Tech
+    location: Blacksburg, VA
+    degree: B.S. in Computer Science
+    dates: 2011 - 2014
+    # dates: May 2014
+    overallGPA: 3.99/4.00
+    majorGPA: 4.00/4.00
+
+  # - school: Northside High School
+  #   location: Roanoke, VA
+    # dates: May 2011
+    # dates: May 2011
+    # dates: May 2011
+
+
+current_position:
+    place: Facebook AI Research (Meta)
+    location: New York City
+    title: Research Scientist
+    dates: 2019 -- Present
+    website: https://www.vlmedia.cz/
+
+positions:
+  - place: Carnegie Mellon University
+    title: Research Assistant
+    inline_detail: "with \\href{http://zicokolter.com}{J. Zico Kolter}"
+    dates: 2016 -- 2019
+  - place: Intel Labs
+    location: Santa Clara
+    title: Research Intern
+    dates: 2018
+    inline_detail: "with \\href{http://vladlen.info/}{Vladlen Koltun}"
+  - place: Google DeepMind
+    location: London
+    title: Research Intern
+    dates: 2017
+    inline_detail: "with \\href{https://scholar.google.com/citations?user=nzEluBwAAAAJ}{Nando de Freitas} and \\href{http://mdenil.com/}{Misha Denil}"
+  - place: Carnegie Mellon University
+    title: Research Assistant
+    inline_detail: "with \\href{https://www.cs.cmu.edu/~satya/}{Mahadev Satyanarayanan}"
+    dates: 2014 -- 2016
+  - place: Adobe Research
+    location: San Jose
+    title: Data Scientist Intern
+    dates: 2014
+    inline_detail: "with \\href{https://research.adobe.com/person/david-tompkins/}{David Tompkins}"
+
+  - place: Virginia Tech
+    title: Research Assistant
+    inline_detail: "with \\href{https://people.cs.vt.edu/~ltw/shortvita.html}{Layne Watson} and \\href{https://dblp.org/pid/75/8682.html}{David Easterling}"
+    dates: 2013 -- 2014
+
+  - place: Virginia Tech
+    title: Research Assistant
+    inline_detail: "with \\href{https://www.magnum.io/people/jules.html}{Jules White} and \\href{https://scholar.google.com/citations?user=MRKab9cAAAAJ}{Hamilton Turner}"
+    dates: 2012 -- 2014
+
+  - place: Virginia Tech
+    title: Research Assistant
+    inline_detail: "with \\href{https://www.ssrg.ece.vt.edu/}{Binoy Ravindran} and \\href{http://www.alastairmurray.co.uk/}{Alastair Murray}"
+    dates: 2012 -- 2014
+
+  - place: Snowplow
+    location: Remote
+    title: Software Intern
+    dates: 2013 -- 2014
+
+  - place: Qualcomm
+    location: San Diego
+    title: Software Intern
+    dates: 2013
+
+  - place: Phoenix Integration
+    location: Virginia
+    title: Software Intern
+    dates: 2012
+
+  - place: Sunapsys
+    location: Virginia
+    title: Network Administrator Intern
+    dates: 2011
+
+skills:
+  - title: Frameworks
+    details: JAX, NumPy, Pandas, PyTorch, SciPy, TensorFlow, Torch7
+  - title: Programming
+    details: C, C++, Fortran, Haskell, Java,
+      Lua, Make, Mathematica, Python, R, Scala
+  - title: Tools
+    details: Linux, emacs, vim, evil, org, mu4e, xmonad, git, tmux, zsh
