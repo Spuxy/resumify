@@ -3,12 +3,11 @@ name:
   last: Boye-Kofi
 email: Spuxy@seznam.cz
 pdf: /data/cv.pdf
-src: https://github.com/Spuxy/cv
 url: "spuxy.github.io"
 social:
-  github: SpuxyGithub
-  twitter: SpuxyTwitter
-  linkedin: SpuxyLinkedin
+  github: Spuxy
+  twitter: Spuxy
+  linkedin: filip-boye-kofi-86a015206
 
 # Erdős  number is at most 4.
 # (Brandon Amos -> Layne Watson -> Leroy Kelly -> Zoltán Füredi -> Paul Erdős )

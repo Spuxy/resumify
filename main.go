@@ -15,8 +15,8 @@ import (
 type CV struct {
 	Name          d.Name `yaml:"name"`
 	Email         string
-	Social        d.Social
-	Theme         d.Theme
+	Social        d.Social `yaml:"social"`
+	Theme         d.Theme  `yaml:"theme"`
 	About         string
 	Service       []d.Service            `yaml:"service"`
 	Repos         []d.Repos              `yaml:"repos"`
@@ -28,6 +28,7 @@ type CV struct {
 
 func main() {
 	var cv CV
+
 	cfg, err := config.New("src")
 	if err != nil {
 		panic(err)
