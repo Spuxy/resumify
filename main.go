@@ -1,88 +1,44 @@
 package main
 
 import (
-	"io/ioutil"
+	"fmt"
+	"io"
 	"net/http"
 	"os"
 	"text/template"
 
+	"github.com/Spuxy/resume-generator/config"
+	d "github.com/Spuxy/resume-generator/data"
 	yam "gopkg.in/yaml.v2"
 )
 
-type social struct {
-	Github   string
-	Twitter  string
-	Linkedin string
-}
-
-type theme struct {
-	Style string
-	Color string
-}
-
-type service struct {
-	Details string `yaml:"details"`
-	Year    int    `yaml:"year"`
-	Url     string `yaml:"url"`
-}
-
-type repos struct {
-	Repo_url string `yaml:"repo_url"`
-	Year     int    `yaml:"year"`
-	Name     string `yaml:"name"`
-	Desc     string `yaml:"desc"`
-}
-
-type education struct {
-	School   string `yaml:"school"`
-	Location string `yaml:"location"`
-	Degree   string `yaml:"degree"`
-	Dates    string `yaml:"dates"`
-}
-
-type skill struct {
-	Title   string `yaml:"title"`
-	Details string `yaml:"details"`
-}
-
-type previous_positions struct {
-	Place         string `yaml:"place"`
-	Title         string `yaml:"title"`
-	Inline_detail string `yaml:"inline_detail"`
-	Dates         string `yaml:"dates"`
-}
-
-type current_position struct {
-	Place    string `yaml:"place"`
-	Location string `yaml:"location"`
-	Title    string `yaml:"title"`
-	Dates    string `yaml:"dates"`
-	Website  string `yaml:"website"`
-}
-
-type name struct {
-	First string `yaml:"first"`
-	Last  string `yaml:"last"`
-}
-
 type CV struct {
-	Name          name `yaml:"name"`
+	Name          d.Name `yaml:"name"`
 	Email         string
-	Social        social
-	Theme         theme
+	Social        d.Social
+	Theme         d.Theme
 	About         string
-	Service       []service            `yaml:"service"`
-	Repos         []repos              `yaml:"repos"`
-	Education     []education          `yaml:"education"`
-	PrevPositions []previous_positions `yaml:"positions"`
-	CurPosition   current_position     `yaml:"current_position"`
-	Skills        []skill              `yaml:"skills"`
+	Service       []d.Service            `yaml:"service"`
+	Repos         []d.Repos              `yaml:"repos"`
+	Education     []d.Education          `yaml:"education"`
+	PrevPositions []d.Previous_positions `yaml:"positions"`
+	CurPosition   d.Current_position     `yaml:"current_position"`
+	Skills        []d.Skill              `yaml:"skills"`
 }
 
 func main() {
 	var cv CV
+	cfg, err := config.New("src")
+	if err != nil {
+		panic(err)
+	}
 
-	content, err := ioutil.ReadFile("cv/cv.yml")
+	resp, err := http.Get(cfg.Get("src"))
+	if err != nil {
+		panic(err)
+	}
+
+	content, err := io.ReadAll(resp.Body)
 	if err != nil {
 		panic(err)
 	}
@@ -98,15 +54,17 @@ func main() {
 			panic(err)
 		}
 
+		tmpl.Execute(rw, cv)
+
 		f, err := os.Create("index.html")
+		defer f.Close()
 		if err != nil {
 			panic(err)
 		}
-		defer f.Close()
 
 		tmpl.Execute(f, cv)
-		tmpl.Execute(rw, cv)
 	})
 
-	http.ListenAndServe(":8090", nil)
+	fmt.Println("server is running on port", cfg.Get("port"))
+	fmt.Println(http.ListenAndServe(fmt.Sprintf(":%s", cfg.Get("port")), nil))
 }
