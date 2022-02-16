@@ -3,6 +3,7 @@ package main
 import (
 	"io/ioutil"
 	"net/http"
+	"os"
 	"text/template"
 
 	yam "gopkg.in/yaml.v2"
@@ -80,19 +81,32 @@ type CV struct {
 
 func main() {
 	var cv CV
-	content, _ := ioutil.ReadFile("cv/cv.yml")
-	err := yam.Unmarshal(content, &cv)
+
+	content, err := ioutil.ReadFile("cv/cv.yml")
 	if err != nil {
 		panic(err)
 	}
-	// fs := http.FileServer(http.Dir("public/"))
-	// http.Handle("/static/", http.StripPrefix("/static", fs))
-	http.HandleFunc("/ahoj", func(rw http.ResponseWriter, r *http.Request) {
+
+	err = yam.Unmarshal(content, &cv)
+	if err != nil {
+		panic(err)
+	}
+
+	http.HandleFunc("/generate", func(rw http.ResponseWriter, r *http.Request) {
 		tmpl, err := template.ParseFiles("public/index.html")
 		if err != nil {
 			panic(err)
 		}
+
+		f, err := os.Create("generated.html")
+		if err != nil {
+			panic(err)
+		}
+		defer f.Close()
+
+		tmpl.Execute(f, cv)
 		tmpl.Execute(rw, cv)
 	})
+
 	http.ListenAndServe(":8090", nil)
 }
