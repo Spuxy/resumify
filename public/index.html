@@ -255,7 +255,7 @@
                   <td>
                     <strong>{{$val.Degree}}</strong>, {{$val.School}} {{$val.Location}}
                   </td>
-                  <td>
+                  <td class="text-end">
                     {{$val.Dates}}
                   </td>
                 </tr>
@@ -284,7 +284,7 @@
                   <td>
                     <strong>{{$val.Title}}</strong>, {{$val.Place}}
                   </td>
-                  <td>
+                  <td class="text-end">
                     {{$val.Dates}}
                   </td>
                 </tr>
@@ -313,7 +313,7 @@
                   <td>
                     <a href="{{$val.Repo_url}}">{{$val.Name}}</a> | 🤩 210 | {{$val.Desc}}
                   </td>
-                  <td>
+                  <td class="text-end">
                     {{$val.Year}}
                   </td>
                 </tr>
@@ -358,17 +358,21 @@
         </div>
         {{range $key, $val := .Galleries}}
         <div class="row">
-          <div class="col-xl-12 col-12 col-md-12">
+          <div class="col-lg-1 col-1 col-md-1">
+          </div>
+          <div class="col-lg-10 col-10 col-md-10">
             <div class="thumbnail">
               <a href="https://raw.githubusercontent.com/Spuxy/cv/master{{$val.Picture_path}}">
                 <img class="rounded mx-auto d-block"
                   src="https://raw.githubusercontent.com/Spuxy/cv/master{{$val.Picture_path}}" alt="Lights"
-                  style="width:40%">
+                  style="width:100%">
                 <div class="caption text-center">
                   <p>{{$val.Description}}</p>
                 </div>
               </a>
             </div>
+          </div>
+          <div class="col-lg-1 col-1 col-md-1">
           </div>
         </div>
         {{end}}
