@@ -15,14 +15,15 @@ import (
 type CV struct {
 	Name          d.Name `yaml:"name"`
 	Email         string
-	Social        d.Social `yaml:"social"`
-	Theme         d.Theme  `yaml:"theme"`
+	Status        string             `yaml:"status"`
+	Social        d.Social           `yaml:"social"`
+	CurPosition   d.Current_position `yaml:"current_position"`
+	Theme         d.Theme            `yaml:"theme"`
 	About         string
 	Service       []d.Service            `yaml:"service"`
-	Repos         []d.Repos              `yaml:"repos"`
 	Education     []d.Education          `yaml:"education"`
 	PrevPositions []d.Previous_positions `yaml:"positions"`
-	CurPosition   d.Current_position     `yaml:"current_position"`
+	Repos         []d.Repos              `yaml:"repos"`
 	Skills        []d.Skill              `yaml:"skills"`
 	Galleries     []d.Gallery            `yaml:"galleries"`
 }
