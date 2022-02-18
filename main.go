@@ -49,11 +49,25 @@ func main() {
 		panic(err)
 	}
 
+	http.HandleFunc("/preview", func(rw http.ResponseWriter, r *http.Request) {
+		tmpl, err := template.ParseFiles("public/index.html")
+
+		if err != nil {
+			panic(err)
+		}
+
+		fmt.Println("preview the cv")
+
+		tmpl.Execute(rw, cv)
+	})
+
 	http.HandleFunc("/generate", func(rw http.ResponseWriter, r *http.Request) {
 		tmpl, err := template.ParseFiles("public/index.html")
 		if err != nil {
 			panic(err)
 		}
+
+		fmt.Println("generate the cv")
 
 		tmpl.Execute(rw, cv)
 
