@@ -206,7 +206,7 @@
             <div class="row justify-content-md-center">
               <!-- TODO: mensi nebo rovno md musim dat obrazek pod kontakt -->
               <div class="col-lg-2 col-xl-3"></div>
-              <div class="col-lg-10 col-xl-9 col-md-12 col-sm-12 col-12"><img class="img-fluid"
+              <div class="col-lg-10 col-xl-9 col-md-12 col-sm-12 col-12"><img class=" mx-auto d-block img-fluid"
                   src="http://spuxy.github.io/images/me.jpg" alt="alternatetext"></div>
             </div>
           </div>
@@ -295,9 +295,6 @@
           <div class="col-1 col-lg-1 col-md-1 col-sm-1"></div>
         </div>
 
-
-
-
         <div class="row">
           <div class="col-1 col-lg-1 col-md-1 col-sm-1"></div>
           <div class="col-10 col-lg-10 col-md-10 col-sm-10 table-responsive">
@@ -326,8 +323,57 @@
           </div>
           <div class="col-1 col-lg-1 col-md-1 col-sm-1"></div>
         </div>
-      </div>
 
+        <div class="row">
+          <div class="col-1 col-lg-1 col-md-1 col-sm-1"></div>
+          <div class="col-10 col-lg-10 col-md-10 col-sm-10 table-responsive">
+            <table class="table table-borderless table-hover">
+              <thead>
+                <tr>
+                  <th scope="col-2 col-md-2 col-lg-2">
+                    <h1> >_ Skills </h1>
+                  </th>
+                  <th scope="col-10 col-md-10 col-lg-10"></th>
+                </tr>
+              </thead>
+              <tbody>
+                {{range $key, $val := .Skills}}
+                <tr>
+                  <td>
+                    <strong>{{$val.Title}}</strong>
+                  </td>
+                  <td>
+                    {{$val.Details}}
+                  </td>
+                </tr>
+                {{end}}
+              </tbody>
+            </table>
+          </div>
+          <div class="col-1 col-lg-1 col-md-1 col-sm-1"></div>
+        </div>
+
+        <div class="row text-center">
+          <h1> >_ Gallery </h1>
+        </div>
+        {{range $key, $val := .Galleries}}
+        <div class="row">
+          <div class="col-xl-12 col-12 col-md-12">
+            <div class="thumbnail">
+              <a href="https://raw.githubusercontent.com/Spuxy/cv/master{{$val.Picture_path}}">
+                <img class="rounded mx-auto d-block"
+                  src="https://raw.githubusercontent.com/Spuxy/cv/master{{$val.Picture_path}}" alt="Lights"
+                  style="width:40%">
+                <div class="caption text-center">
+                  <p>{{$val.Description}}</p>
+                </div>
+              </a>
+            </div>
+          </div>
+        </div>
+        {{end}}
+
+      </div>
       <div class="col-1 col-lg-1 col-md-1 col-sm-1 order-last no-padding">
       </div>
     </div>

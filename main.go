@@ -24,6 +24,7 @@ type CV struct {
 	PrevPositions []d.Previous_positions `yaml:"positions"`
 	CurPosition   d.Current_position     `yaml:"current_position"`
 	Skills        []d.Skill              `yaml:"skills"`
+	Galleries     []d.Gallery            `yaml:"galleries"`
 }
 
 func main() {
