@@ -1,5 +1,5 @@
 ## Resumify
-Generater tool in Go to build your awesome C
+Generater tool in Go to build your awesome CV :page_facing_up:
 
 ## Why
 Reason is to generate simple and clean site based on most popular configuration extension YML, where people can easily adds new experiences and do it via VCS.
