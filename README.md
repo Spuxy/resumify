@@ -12,6 +12,6 @@ Run resumify app and check your resume on endpoint "/preview" <br />
 If u like that, you can easily generate index.html on endpoint "/generate" <br />
 
 ## TODO
-Create CI/CD
-Create unit test
-Implement more colorschmes (only gruvbox is implemented)
+Create CI/CD <br />
+Create unit test <br />
+Implement more colorschmes (only gruvbox is implemented) <br />
