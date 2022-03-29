@@ -24,6 +24,19 @@
     --green: #98971a;
   }
 
+  th {
+    padding-left: 0px;
+    padding-top: 0px;
+    padding-bottom: 0px;
+    padding-right: 0px;
+    margin: 0px;
+  }
+
+  td {
+    padding: 0px;
+    margin: 0px;
+  }
+
   body {
     background-color: var(--bg);
     color: var(--fg);
@@ -71,7 +84,9 @@
             </div>
             <div class="row justify-content-md-center">
               <div class="col text-center">
+                {{ if .Status }}
                 <i>( {{.Status}} )</i>
+                {{ end }}
               </div>
             </div>
             <div class="row justify-content-md-center">
@@ -229,11 +244,11 @@
         </div>
 
         <div class="row">
-          <div class="col-1 col-lg-1 col-md-1 col-sm-1"></div>
-          <div class="col-10 col-lg-10 col-md-10 col-sm-10 table-responsive">
+          <div class="col-lg-1 col-md-1 col-sm-1"></div>
+          <div class="col-12 col-lg-10 col-md-10 col-sm-10 table-responsive">
             {{.About}}
           </div>
-          <div class="col-1 col-lg-1 col-md-1 col-sm-1"></div>
+          <div class="col-lg-1 col-md-1 col-sm-1"></div>
         </div>
 
         <div class="row">
@@ -245,8 +260,8 @@
         </div>
 
         <div class="row">
-          <div class="col-1 col-lg-1 col-md-1 col-sm-1"></div>
-          <div class="col-10 col-lg-10 col-md-10 col-sm-10 table-responsive">
+          <div class="col-lg-1 col-md-1 col-sm-1"></div>
+          <div class="col-12 col-lg-10 col-md-10 col-sm-10 table-responsive">
             <table class="table table-borderless table-hover">
               <thead>
                 <tr>
@@ -270,12 +285,12 @@
               </tbody>
             </table>
           </div>
-          <div class="col-1 col-lg-1 col-md-1 col-sm-1"></div>
+          <div class="col-lg-1 col-md-1 col-sm-1"></div>
         </div>
 
         <div class="row">
-          <div class="col-1 col-lg-1 col-md-1 col-sm-1"></div>
-          <div class="col-10 col-lg-10 col-md-10 col-sm-10 table-responsive">
+          <div class="col-lg-1 col-md-1 col-sm-1"></div>
+          <div class="col-12 col-lg-10 col-md-10 col-sm-10 table-responsive">
             <table class="table table-borderless table-hover">
               <thead>
                 <tr>
@@ -299,12 +314,12 @@
               </tbody>
             </table>
           </div>
-          <div class="col-1 col-lg-1 col-md-1 col-sm-1"></div>
+          <div class="col-lg-1 col-md-1 col-sm-1"></div>
         </div>
 
         <div class="row">
-          <div class="col-1 col-lg-1 col-md-1 col-sm-1"></div>
-          <div class="col-10 col-lg-10 col-md-10 col-sm-10 table-responsive">
+          <div class="col-lg-1 col-md-1 col-sm-1"></div>
+          <div class="col-12 col-lg-10 col-md-10 col-sm-10 table-responsive">
             <table class="table table-borderless table-hover">
               <thead>
                 <tr>
@@ -328,12 +343,12 @@
               </tbody>
             </table>
           </div>
-          <div class="col-1 col-lg-1 col-md-1 col-sm-1"></div>
+          <div class="col-lg-1 col-md-1 col-sm-1"></div>
         </div>
 
         <div class="row">
-          <div class="col-1 col-lg-1 col-md-1 col-sm-1"></div>
-          <div class="col-10 col-lg-10 col-md-10 col-sm-10 table-responsive">
+          <div class="col-lg-1 col-md-1 col-sm-1"></div>
+          <div class="col-12 col-lg-10 col-md-10 col-sm-10 table-responsive">
             <table class="table table-borderless table-hover">
               <thead>
                 <tr>
@@ -357,7 +372,7 @@
               </tbody>
             </table>
           </div>
-          <div class="col-1 col-lg-1 col-md-1 col-sm-1"></div>
+          <div class="col-lg-1 col-md-1 col-sm-1"></div>
         </div>
 
         <div class="row text-center">
@@ -365,9 +380,9 @@
         </div>
         {{range $key, $val := .Galleries}}
         <div class="row">
-          <div class="col-lg-1 col-1 col-md-1">
+          <div class="col-lg-1 col-md-1">
           </div>
-          <div class="col-lg-10 col-10 col-md-10">
+          <div class="col-lg-10 col-12 col-md-10">
             <div class="thumbnail">
               <a href="https://raw.githubusercontent.com/Spuxy/cv/master{{$val.Picture_path}}">
                 <img class="rounded mx-auto d-block"
@@ -379,7 +394,7 @@
               </a>
             </div>
           </div>
-          <div class="col-lg-1 col-1 col-md-1">
+          <div class="col-lg-1 col-md-1">
           </div>
         </div>
         {{end}}
