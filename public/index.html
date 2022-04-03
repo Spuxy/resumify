@@ -304,7 +304,8 @@
                 {{range $key, $val := .PrevPositions}}
                 <tr>
                   <td>
-                    <strong>{{$val.Title}}</strong>, {{$val.Place}}
+                    <strong>{{$val.Title}}</strong>, {{$val.Place}}<br>
+                    <i>{{$val.Desc}}</i>
                   </td>
                   <td class="text-end">
                     {{$val.Dates}}
