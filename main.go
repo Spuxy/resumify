@@ -22,6 +22,8 @@ type CV struct {
 	CurPosition   d.Current_position `yaml:"current_position"`
 	Theme         d.Theme            `yaml:"theme"`
 	About         string
+	Photo         string                 `yaml:"photo"`
+	Assets        string                 `yaml:"assets"`
 	Service       []d.Service            `yaml:"service"`
 	Education     []d.Education          `yaml:"education"`
 	PrevPositions []d.Previous_positions `yaml:"positions"`

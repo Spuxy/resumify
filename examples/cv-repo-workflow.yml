@@ -1,0 +1,28 @@
+# Drop this file into your CV repo at .github/workflows/deploy.yml.
+#
+# It triggers on every push to cv.yml, regenerates index.html via resumify,
+# and pushes the result to <owner>/<owner>.github.io (auto-derived from the
+# repo owner — no hardcoded usernames needed). The CV repo can be private;
+# the action runs inside its CI with full read access to cv.yml.
+#
+# Required secret in the CV repo:
+#   CV_DEPLOY_TOKEN — fine-grained PAT scoped to <owner>/<owner>.github.io
+#                     with Contents: Read and write.
+
+name: Deploy CV
+on:
+  push:
+    branches: [main, master]
+    paths: ['cv.yml']
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: Spuxy/resumify@master
+        with:
+          src: cv.yml
+          token: ${{ secrets.CV_DEPLOY_TOKEN }}

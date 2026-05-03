@@ -26,11 +26,18 @@ Generate `index.html` once and exit — perfect for committing to a `gh-pages` b
 ```
 
 ### 2b. Server mode (local preview)
-Put the source URL into `.env` under the key `src`, then run resumify:
+Copy `.env.example` to `src/.env` and edit it to point at your `cv.yml`, then run resumify:
+
+```sh
+cp .env.example src/.env
+# edit src/.env: set src=https://raw.githubusercontent.com/<you>/cv/master/cv.yml
+./resumify
+```
+
 - `/preview` — render the CV in the browser
 - `/generate` — render and write `index.html` to disk
 
-`--src` also overrides the configured source in server mode.
+`--src` also overrides the configured source in server mode. `src/.env` is gitignored so it never gets committed.
 
 ### 2c. GitHub Action (zero-install)
 Use the bundled composite action from your CV repo — no Go toolchain or local build needed. It checks out resumify, builds it, and drops `index.html` in your workspace.
@@ -97,7 +104,7 @@ If you keep `cv.yml` in one repo and serve from `username/username.github.io`, g
 
 1. Create a fine-grained PAT scoped to your `<username>.github.io` repo with **Contents: Read and write**.
 2. Add it as a secret named `CV_DEPLOY_TOKEN` in your CV repo.
-3. Drop this workflow into your CV repo at `.github/workflows/deploy.yml`:
+3. Drop this workflow into your CV repo at `.github/workflows/deploy.yml` (also available as a ready-to-copy file at [`examples/cv-repo-workflow.yml`](examples/cv-repo-workflow.yml)):
 
 ```yaml
 name: Deploy CV
@@ -140,6 +147,16 @@ The action skips the commit when the rendered HTML is unchanged, so re-runs are 
 | `--build` | Generate `index.html` and exit | `false` |
 | `--src` | YAML source (URL or local path); overrides `.env` | `""` |
 | `--out` | Output path for `--build` mode | `index.html` |
+
+## CV YAML fields
+Beyond the obvious ones, two top-level fields control where the template pulls media from — set them in your `cv.yml`:
+
+| Field | Description | Example |
+|---|---|---|
+| `photo` | Full URL to your profile photo | `https://myuser.github.io/images/me.jpg` |
+| `assets` | Base URL prepended to gallery `picture_path` entries | `https://raw.githubusercontent.com/myuser/cv/master` |
+
+If you leave them empty the template still renders, but profile/gallery images will be broken.
 
 ## TODO
 Create CI/CD <br />

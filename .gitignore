@@ -1,0 +1,16 @@
+# env / config
+.env
+*.env
+!*.env.example
+
+# build artifact
+/resumify
+
+# generated CV
+/index.html
+/dist/
+
+# OS / editor
+.DS_Store
+.idea/
+.vscode/
