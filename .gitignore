@@ -3,8 +3,9 @@
 *.env
 !*.env.example
 
-# build artifact
+# build artifacts
 /resumify
+/resume-generator
 
 # generated CV
 /index.html

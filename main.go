@@ -28,6 +28,7 @@ type CV struct {
 	Education     []d.Education          `yaml:"education"`
 	PrevPositions []d.Previous_positions `yaml:"positions"`
 	Repos         []d.Repos              `yaml:"repos"`
+	Contributions []d.Contribution       `yaml:"contributions"`
 	Skills        []d.Skill              `yaml:"skills"`
 	Galleries     []d.Gallery            `yaml:"galleries"`
 }

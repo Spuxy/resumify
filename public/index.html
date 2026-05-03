@@ -347,6 +347,37 @@
           <div class="col-lg-1 col-md-1 col-sm-1"></div>
         </div>
 
+        {{if .Contributions}}
+        <div class="row">
+          <div class="col-lg-1 col-md-1 col-sm-1"></div>
+          <div class="col-12 col-lg-10 col-md-10 col-sm-10 table-responsive">
+            <table class="table table-borderless table-hover">
+              <thead>
+                <tr>
+                  <th scope="col">
+                    <h1> >_ Contributions </h1>
+                  </th>
+                  <th scope="col"></th>
+                </tr>
+              </thead>
+              <tbody>
+                {{range $key, $val := .Contributions}}
+                <tr>
+                  <td>
+                    <a href="{{$val.Repo_url}}">{{$val.Name}}</a> | {{$val.Desc}}
+                  </td>
+                  <td class="text-end">
+                    {{$val.Year}}
+                  </td>
+                </tr>
+                {{end}}
+              </tbody>
+            </table>
+          </div>
+          <div class="col-lg-1 col-md-1 col-sm-1"></div>
+        </div>
+        {{end}}
+
         <div class="row">
           <div class="col-lg-1 col-md-1 col-sm-1"></div>
           <div class="col-12 col-lg-10 col-md-10 col-sm-10 table-responsive">
