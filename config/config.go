@@ -31,6 +31,9 @@ func (c *Config) readAll() error {
 
 	files, err := ioutil.ReadDir(c.Dir)
 	if err != nil {
+		if os.IsNotExist(err) {
+			return nil
+		}
 		return err
 	}
 

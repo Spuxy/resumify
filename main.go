@@ -47,6 +47,9 @@ func main() {
 	if *src != "" {
 		source = *src
 	}
+	if source == "" {
+		panic("no source provided: pass --src <path-or-url> or set src= in src/.env")
+	}
 
 	cv, err := loadCV(source)
 	if err != nil {
@@ -59,6 +62,11 @@ func main() {
 		}
 		fmt.Println("generated", *out)
 		return
+	}
+
+	port := cfg.Get("port")
+	if port == "" {
+		port = "8080"
 	}
 
 	http.HandleFunc("/preview", func(rw http.ResponseWriter, r *http.Request) {
@@ -86,8 +94,8 @@ func main() {
 		tmpl.Execute(f, cv)
 	})
 
-	fmt.Println("server is running on port", cfg.Get("port"))
-	fmt.Println(http.ListenAndServe(fmt.Sprintf(":%s", cfg.Get("port")), nil))
+	fmt.Println("server is running on port", port)
+	fmt.Println(http.ListenAndServe(fmt.Sprintf(":%s", port), nil))
 }
 
 func loadCV(source string) (CV, error) {
