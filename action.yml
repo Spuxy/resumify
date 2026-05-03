@@ -1,0 +1,149 @@
+name: 'Resumify'
+description: 'Generate a static CV site (index.html) from a YAML source — no Go toolchain or recompile needed in your repo.'
+author: 'Spuxy'
+branding:
+  icon: 'file-text'
+  color: 'orange'
+
+inputs:
+  src:
+    description: 'Path to your cv.yml (relative to your repo) or a raw URL.'
+    required: true
+    default: 'cv.yml'
+  out:
+    description: 'Output path for the generated index.html.'
+    required: false
+    default: 'index.html'
+  ref:
+    description: 'Resumify ref (tag, branch, or SHA) to use.'
+    required: false
+    default: 'master'
+  go-version:
+    description: 'Go version used to build resumify.'
+    required: false
+    default: '1.21'
+  target-repo:
+    description: 'Optional: owner/repo to push the generated HTML to. If empty and a token is provided, defaults to <owner>/<owner>.github.io (lowercased) using the workflow''s repo owner.'
+    required: false
+    default: ''
+  target-branch:
+    description: 'Branch to push to in target-repo.'
+    required: false
+    default: 'main'
+  target-path:
+    description: 'Path inside target-repo to write the generated HTML.'
+    required: false
+    default: 'index.html'
+  token:
+    description: 'GitHub token (PAT or fine-grained) with contents:write on target-repo. Required when target-repo is set.'
+    required: false
+    default: ''
+  commit-message:
+    description: 'Commit message used when pushing to target-repo.'
+    required: false
+    default: 'chore: update CV via resumify'
+  commit-user-name:
+    description: 'Git user.name for the push commit.'
+    required: false
+    default: 'github-actions[bot]'
+  commit-user-email:
+    description: 'Git user.email for the push commit.'
+    required: false
+    default: '41898282+github-actions[bot]@users.noreply.github.com'
+
+runs:
+  using: 'composite'
+  steps:
+    - name: Checkout resumify
+      uses: actions/checkout@v4
+      with:
+        repository: Spuxy/resumify
+        ref: ${{ inputs.ref }}
+        path: .resumify
+
+    - name: Set up Go
+      uses: actions/setup-go@v5
+      with:
+        go-version: ${{ inputs.go-version }}
+        cache-dependency-path: .resumify/go.sum
+
+    - name: Build resumify
+      shell: bash
+      working-directory: .resumify
+      run: go build -o resumify .
+
+    - name: Generate CV
+      shell: bash
+      env:
+        SRC: ${{ inputs.src }}
+        OUT: ${{ inputs.out }}
+      run: |
+        case "$SRC" in
+          http://*|https://*) src_arg="$SRC" ;;
+          /*)                 src_arg="$SRC" ;;
+          *)                  src_arg="$GITHUB_WORKSPACE/$SRC" ;;
+        esac
+        case "$OUT" in
+          /*) out_arg="$OUT" ;;
+          *)  out_arg="$GITHUB_WORKSPACE/$OUT" ;;
+        esac
+        mkdir -p "$(dirname "$out_arg")"
+        cd "$GITHUB_WORKSPACE/.resumify"
+        ./resumify --build --src "$src_arg" --out "$out_arg"
+
+    - name: Push to target repo
+      if: inputs.target-repo != '' || inputs.token != ''
+      shell: bash
+      env:
+        TARGET_REPO: ${{ inputs.target-repo }}
+        TARGET_BRANCH: ${{ inputs.target-branch }}
+        TARGET_PATH: ${{ inputs.target-path }}
+        TOKEN: ${{ inputs.token }}
+        COMMIT_MESSAGE: ${{ inputs.commit-message }}
+        COMMIT_USER_NAME: ${{ inputs.commit-user-name }}
+        COMMIT_USER_EMAIL: ${{ inputs.commit-user-email }}
+        OUT: ${{ inputs.out }}
+        OWNER: ${{ github.repository_owner }}
+      run: |
+        if [ -z "$TOKEN" ]; then
+          echo "::error::target-repo is set but no token was provided. Pass a PAT via the 'token' input."
+          exit 1
+        fi
+
+        if [ -z "$TARGET_REPO" ]; then
+          owner_lc="${OWNER,,}"
+          TARGET_REPO="${owner_lc}/${owner_lc}.github.io"
+          echo "target-repo not set — defaulting to $TARGET_REPO"
+        fi
+
+        case "$OUT" in
+          /*) generated="$OUT" ;;
+          *)  generated="$GITHUB_WORKSPACE/$OUT" ;;
+        esac
+
+        work=$(mktemp -d)
+        git clone --depth 1 --branch "$TARGET_BRANCH" \
+          "https://x-access-token:${TOKEN}@github.com/${TARGET_REPO}.git" \
+          "$work" 2>/dev/null || git clone --depth 1 \
+          "https://x-access-token:${TOKEN}@github.com/${TARGET_REPO}.git" "$work"
+
+        cd "$work"
+        git checkout "$TARGET_BRANCH" 2>/dev/null || git checkout -b "$TARGET_BRANCH"
+
+        mkdir -p "$(dirname "$TARGET_PATH")"
+        cp "$generated" "$TARGET_PATH"
+
+        git config user.name "$COMMIT_USER_NAME"
+        git config user.email "$COMMIT_USER_EMAIL"
+        git add "$TARGET_PATH"
+
+        if git diff --cached --quiet; then
+          echo "No changes to push."
+        else
+          git commit -m "$COMMIT_MESSAGE"
+          git push origin "$TARGET_BRANCH"
+        fi
+
+    - name: Cleanup
+      shell: bash
+      run: rm -rf .resumify
